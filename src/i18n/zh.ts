@@ -1,26 +1,28 @@
 const zh = {
   // Header
-  "app.title": "OpenAI Agents Starter",
-  "app.subtitle": "运行在 EdgeOne Makers 上，支持会话记忆、Agent Tools",
+  "app.title": "专升本知识整理",
+  "app.subtitle": "输入知识点，自动梳理重难点并生成思维导图 · 运行在 EdgeOne Makers",
 
   // Empty state
-  "empty.title": "OpenAI Agents Starter",
-  "empty.hint": "我是运行在 EdgeOne 环境中的 OpenAI Agents，支持自定义工具、会话记忆，并帮助你完成天气查询、穿衣建议、翻译和文本统计。",
-  "empty.features": "EdgeOne Store · Session Memory · Agent Tools",
+  "empty.title": "专升本知识整理 Agent",
+  "empty.hint": "我是你的专升本辅导老师。发我一个知识点（比如「进制转换」「栈和队列」），我会帮你梳理核心概念、标出重点难点、提醒易错点，最后生成一张思维导图。",
+  "empty.features": "重难点分析 · 易错点提醒 · 思维导图",
 
   // Chat input
-  "chat.placeholder": "发消息…  ⏎ 发送 · Shift+⏎ 换行",
-  "chat.hint": "由 OpenAI Agents SDK + EdgeOne Makers 驱动 · 仅供演示",
+  "chat.placeholder": "输入知识点…  ⏎ 发送 · Shift+⏎ 换行",
+  "chat.hint": "由 OpenAI Agents SDK + EdgeOne Makers 驱动",
 
   // Preset questions
-  "preset.1": "现在北京天气怎么样，有什么穿衣建议吗？",
-  "preset.2": "帮我翻译英文\"你好，欢迎来到北京！\"，并统计翻译字符数。",
+  "preset.1": "帮我整理『进制转换』这个知识点，分析重难点并画思维导图",
+  "preset.2": "整理数据结构里的『栈和队列』，我总是分不清它们的进出规则",
 
-  // Tool indicators
-  "tool.weather": "天气查询",
-  "tool.clothing": "穿衣建议",
-  "tool.translate": "文本翻译",
-  "tool.statistics": "文本统计",
+  // Workflow stage indicators
+  "stage.analyze": "分析知识点",
+  "stage.keypoints": "提炼重难点",
+  "stage.mindmap": "生成思维导图",
+
+  // Mindmap
+  "mindmap.generating": "思维导图生成中…",
 
   // Status & errors
   "status.error": "⚠️ 请求失败，请检查后端服务是否启动。",

@@ -1,26 +1,28 @@
 const en = {
   // Header
-  "app.title": "OpenAI Agents Starter",
-  "app.subtitle": "Running on EdgeOne Makers with session memory & Agent Tools",
+  "app.title": "Exam Prep Knowledge Tutor",
+  "app.subtitle": "Turn any topic into key/difficult points + a mind map · Running on EdgeOne Makers",
 
   // Empty state
-  "empty.title": "OpenAI Agents Starter",
-  "empty.hint": "I'm an OpenAI Agent running on EdgeOne with custom tools and session memory. I can help with weather, clothing advice, translation, and text statistics.",
-  "empty.features": "EdgeOne Store · Session Memory · Agent Tools",
+  "empty.title": "Exam Prep Knowledge Tutor",
+  "empty.hint": "I'm your exam-prep tutor. Send me a topic (e.g. \"number base conversion\" or \"stacks & queues\") and I'll break down the core concepts, highlight key & difficult points, warn about common mistakes, and finish with a mind map.",
+  "empty.features": "Key Points · Pitfall Alerts · Mind Map",
 
   // Chat input
-  "chat.placeholder": "Type a message...  ⏎ Send · Shift+⏎ Newline",
-  "chat.hint": "Powered by OpenAI Agents SDK + EdgeOne Makers · Demo only",
+  "chat.placeholder": "Type a topic...  ⏎ Send · Shift+⏎ Newline",
+  "chat.hint": "Powered by OpenAI Agents SDK + EdgeOne Makers",
 
   // Preset questions
-  "preset.1": "What is the weather like in Beijing now? Any clothing suggestions?",
-  "preset.2": "Translate \"Hello, welcome to Beijing!\" into Chinese and count the characters.",
+  "preset.1": "Break down the topic \"number base conversion\" with key points and a mind map.",
+  "preset.2": "Explain \"stacks and queues\" — I always mix up their insert/remove rules.",
 
-  // Tool indicators
-  "tool.weather": "Weather",
-  "tool.clothing": "Clothing",
-  "tool.translate": "Translate",
-  "tool.statistics": "Statistics",
+  // Workflow stage indicators
+  "stage.analyze": "Analyze topic",
+  "stage.keypoints": "Extract key points",
+  "stage.mindmap": "Generate mind map",
+
+  // Mindmap
+  "mindmap.generating": "Generating mind map…",
 
   // Status & errors
   "status.error": "Request failed. Please check if the backend service is running.",

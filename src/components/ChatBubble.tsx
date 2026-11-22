@@ -1,8 +1,10 @@
-import { memo } from 'react';
+import { memo, isValidElement } from 'react';
+import type { ReactNode } from 'react';
 import type { Message } from '../types';
-import Markdown from 'react-markdown';
+import Markdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useT } from '../i18n';
+import MindmapView from './MindmapView';
 import styles from './ChatBubble.module.css';
 
 interface Props {
@@ -70,6 +72,35 @@ export default memo(function ChatBubble({ message }: Props) {
 
   if (!isUser && !message.content) return null;
 
+  /**
+   * The tutor agent emits its mind map as a ```mindmap fenced code block.
+   * We intercept it at the markdown layer: strip the surrounding <pre> and
+   * hand the raw markdown to <MindmapView>, which shows a placeholder while
+   * streaming and renders an interactive markmap SVG once the stream ends.
+   */
+  const components: Components = {
+    pre: ({ children }) => {
+      const nodes: ReactNode[] = Array.isArray(children) ? children : [children];
+      const hasMindmap = nodes.some(
+        (node) => isValidElement(node) &&
+          typeof node.props.className === 'string' &&
+          node.props.className.includes('language-mindmap'),
+      );
+      return hasMindmap ? <>{children}</> : <pre>{children}</pre>;
+    },
+    code: ({ className, children }) => {
+      if (typeof className === 'string' && className.includes('language-mindmap')) {
+        return (
+          <MindmapView
+            markdown={String(children).replace(/\n$/, '')}
+            streaming={!!message.streaming}
+          />
+        );
+      }
+      return <code className={className}>{children}</code>;
+    },
+  };
+
   return (
     <div className={`${styles.row} ${isUser ? styles.userRow : styles.botRow}`}>
       {!isUser && <div className={styles.avatar}>⬡</div>}
@@ -78,7 +109,9 @@ export default memo(function ChatBubble({ message }: Props) {
           message.content
         ) : (
           <div className={`${styles.markdown} ${message.streaming ? styles.markdownStreaming : ''}`}>
-            <Markdown remarkPlugins={[remarkGfm]}>{normalizeMarkdown(message.content)}</Markdown>
+            <Markdown remarkPlugins={[remarkGfm]} components={components}>
+              {normalizeMarkdown(message.content)}
+            </Markdown>
           </div>
         )}
         <span className={styles.time}>
