@@ -11,12 +11,9 @@ import {
   listConversations,
   deleteConversation,
 } from './api';
-import type { RawSseEvent } from './api';
 import ToolIndicators from './components/ToolIndicators';
 import ChatWindow from './components/ChatWindow';
 import ChatInput from './components/ChatInput';
-import DebugPanel from './components/DebugPanel';
-import CodeViewer from './components/CodeViewer';
 import ConversationSidebar from './components/ConversationSidebar';
 import GitHubLink from './components/GitHubLink';
 import DeployLink from './components/DeployLink';
@@ -100,8 +97,6 @@ function AppInner() {
   const [lamps, setLamps]       = useState<ToolLampState[]>(buildLamps);
   const [loading, setLoading]   = useState(false);
   const [historyLoading, setHistoryLoading] = useState(true);
-  const [debugEvents, setDebugEvents] = useState<RawSseEvent[]>([]);
-  const [rightPanelMode, setRightPanelMode] = useState<'code' | 'debug'>('code');
 
   // Conversation list (sidebar) state
   const [conversations, setConversations] = useState<ConversationSummary[]>([]);
@@ -281,7 +276,6 @@ function AppInner() {
 
   const handleSend = useCallback(async (text: string) => {
     initDoneRef.current = true;
-    setRightPanelMode('debug');
 
     const userMsg: Message = {
       id: crypto.randomUUID(),
@@ -364,35 +358,10 @@ function AppInner() {
         }, 1000);
       },
 
-      onRawEvent(event) {
+      onRawEvent() {
         // Every backend SSE frame flows through here, so this is the cheapest
-        // hook for "first byte from backend".
+        // hook for "first byte from backend" (optimistic sidebar update).
         primeSidebar();
-
-        // Coalesce consecutive text_delta events into a single growing entry,
-        // so a multi-paragraph response doesn't flood the debug panel with
-        // hundreds of one-token rows.
-        if (event.eventType === 'text_delta') {
-          const delta = (event.data as { delta?: string } | null)?.delta ?? '';
-          setRightPanelMode('debug');
-          setDebugEvents(prev => {
-            const last = prev[prev.length - 1];
-            if (last && last.eventType === 'text_delta') {
-              const prevDelta = (last.data as { delta?: string } | null)?.delta ?? '';
-              const merged: RawSseEvent = {
-                ...last,
-                data: { delta: prevDelta + delta },
-                raw: last.raw + delta,
-                timestamp: event.timestamp,
-              };
-              return [...prev.slice(0, -1), merged];
-            }
-            return [...prev, event];
-          });
-          return;
-        }
-        setRightPanelMode('debug');
-        setDebugEvents(prev => [...prev, event]);
       },
 
       onDone() {
@@ -452,8 +421,6 @@ function AppInner() {
     conversationIdRef.current = newId;
     setActiveConversationId(newId);
     setMessages([]);
-    setDebugEvents([]);
-    setRightPanelMode('code');
     setLoading(false);
     initDoneRef.current = false;
   }, [refreshConversations]);
@@ -485,7 +452,6 @@ function AppInner() {
     localStorage.setItem(CONVERSATION_ID_STORAGE_KEY, id);
     conversationIdRef.current = id;
     setActiveConversationId(id);
-    setRightPanelMode('code');
     void loadConversation(id);
   }, [loading, loadConversation]);
 
@@ -498,8 +464,6 @@ function AppInner() {
     conversationIdRef.current = newId;
     setActiveConversationId(newId);
     setMessages([]);
-    setDebugEvents([]);
-    setRightPanelMode('code');
     initDoneRef.current = false;
     setHistoryLoading(false);
   }, [loading]);
@@ -534,8 +498,6 @@ function AppInner() {
       conversationIdRef.current = newId;
       setActiveConversationId(newId);
       setMessages([]);
-      setDebugEvents([]);
-      setRightPanelMode('code');
       initDoneRef.current = false;
       setHistoryLoading(false);
     }
@@ -589,14 +551,6 @@ function AppInner() {
             )}
           </div>
           <ChatInput onSend={handleSend} onStop={handleStop} onClear={handleClearHistory} disabled={loading} />
-        </div>
-
-        <div className={styles.codePanel}>
-          {rightPanelMode === 'code' ? (
-            <CodeViewer />
-          ) : (
-            <DebugPanel events={debugEvents} onClear={() => setDebugEvents([])} />
-          )}
         </div>
       </div>
       <GitHubLink />

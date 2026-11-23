@@ -1,20 +1,20 @@
 const zh = {
   // Header
   "app.title": "专升本知识整理",
-  "app.subtitle": "输入知识点，自动梳理重难点并生成思维导图 · 运行在 EdgeOne Makers",
+  "app.subtitle": "四大板块拆解知识点 · 知识梳理 / 考点真题 / 重难点 / 思维导图 · 运行在 EdgeOne Makers",
 
   // Empty state
-  "empty.title": "专升本知识整理 Agent",
-  "empty.hint": "我是你的专升本辅导老师。发我一个知识点（比如「进制转换」「栈和队列」），我会帮你梳理核心概念、标出重点难点、提醒易错点，最后生成一张思维导图。",
-  "empty.features": "重难点分析 · 易错点提醒 · 思维导图",
+  "empty.title": "广东专升本知识整理 Agent",
+  "empty.hint": "我是你的广东专升本辅导老师。发我一个知识点（比如「进制转换」「栈和队列」），我会分四大板块输出：📚 知识梳理、🎯 广东考点·真题解析、⚠️ 重难点与易错点，最后配一张 🧠 知识思维导图。",
+  "empty.features": "知识梳理 · 广东考点真题 · 重难点易错 · 知识思维导图",
 
   // Chat input
   "chat.placeholder": "输入知识点…  ⏎ 发送 · Shift+⏎ 换行",
   "chat.hint": "由 OpenAI Agents SDK + EdgeOne Makers 驱动",
 
   // Preset questions
-  "preset.1": "帮我整理『进制转换』这个知识点，分析重难点并画思维导图",
-  "preset.2": "整理数据结构里的『栈和队列』，我总是分不清它们的进出规则",
+  "preset.1": "帮我整理『进制转换』这个知识点，结合广东专升本考点和真题讲解",
+  "preset.2": "整理数据结构里的『栈和队列』，结合广东专升本真题分析重难点",
 
   // Workflow stage indicators
   "stage.analyze": "分析知识点",

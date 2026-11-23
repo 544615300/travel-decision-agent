@@ -1,20 +1,20 @@
 const en = {
   // Header
   "app.title": "Exam Prep Knowledge Tutor",
-  "app.subtitle": "Turn any topic into key/difficult points + a mind map · Running on EdgeOne Makers",
+  "app.subtitle": "Any topic, four sections: Knowledge · Exam Points & Papers · Key Points · Mind Map · Running on EdgeOne Makers",
 
   // Empty state
   "empty.title": "Exam Prep Knowledge Tutor",
-  "empty.hint": "I'm your exam-prep tutor. Send me a topic (e.g. \"number base conversion\" or \"stacks & queues\") and I'll break down the core concepts, highlight key & difficult points, warn about common mistakes, and finish with a mind map.",
-  "empty.features": "Key Points · Pitfall Alerts · Mind Map",
+  "empty.hint": "I'm your exam-prep tutor. Send me a topic (e.g. \"number base conversion\" or \"stacks & queues\") and I'll reply in four sections: 📚 Knowledge, 🎯 Exam Points & Past Papers, ⚠️ Key Points & Pitfalls, plus a 🧠 knowledge-only mind map.",
+  "empty.features": "Knowledge · Exam Points & Papers · Key Points · Mind Map",
 
   // Chat input
   "chat.placeholder": "Type a topic...  ⏎ Send · Shift+⏎ Newline",
   "chat.hint": "Powered by OpenAI Agents SDK + EdgeOne Makers",
 
   // Preset questions
-  "preset.1": "Break down the topic \"number base conversion\" with key points and a mind map.",
-  "preset.2": "Explain \"stacks and queues\" — I always mix up their insert/remove rules.",
+  "preset.1": "Break down \"number base conversion\" with exam points and past-paper analysis.",
+  "preset.2": "Explain \"stacks and queues\" — analyze key points with typical exam questions.",
 
   // Workflow stage indicators
   "stage.analyze": "Analyze topic",
