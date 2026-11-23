@@ -1,4 +1,5 @@
 .wrap {
+  position: relative;
   margin: 0.5em 0;
   border: 1px solid var(--bg-border);
   border-radius: 8px;
@@ -15,6 +16,28 @@
   width: 100%;
   height: 280px;
   display: block;
+}
+
+/* Small preview: one tap to open the full-screen, zoomable view. */
+.expandBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--bg-border);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.expandBtn:hover {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
 }
 
 .markmap-svg :global(g) {
@@ -43,7 +66,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* Degraded fallback: plain code block when CDN fails */
+/* Degraded fallback: plain code block when parsing fails */
 .fallback {
   width: 100%;
   max-height: 220px;
@@ -54,4 +77,94 @@
   background: rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   white-space: pre-wrap;
+}
+
+/* ---------------- Full-screen zoomable overlay ---------------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3vh 3vw;
+  box-sizing: border-box;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  max-width: 1400px;
+  background: #0e1118;
+  border: 1px solid var(--bg-border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.modalBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--bg-border);
+  flex-shrink: 0;
+}
+
+.modalTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modalHint {
+  flex: 1;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.modalActions {
+  display: flex;
+  gap: 8px;
+}
+
+.modalBtn {
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--bg-border);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.modalBtn:hover {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+}
+
+/* Absolute positioning gives the SVG a real, measurable size, which
+ * markmap's fit() needs in order to frame the whole tree correctly. */
+.modalBody {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.modalSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+
+.modalSvg:active {
+  cursor: grabbing;
 }
