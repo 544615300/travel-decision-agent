@@ -52,6 +52,37 @@ html, body, #root {
 ::-webkit-scrollbar-thumb { background: var(--bg-border); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
+/* ── KaTeX math (styles bundled from katex/dist/katex.min.css) ────────── */
+/* Formulas inherit the dark theme instead of defaulting to black. */
+.katex {
+  color: var(--text-primary);
+}
+/* The chat bubble uses `word-break: break-word`; never split a formula
+   mid-expression — KaTeX glyphs must stay glued together. */
+.katex, .katex * {
+  word-break: normal;
+}
+/* Display (block) formulas: centered slightly larger, and horizontally
+   scrollable when wider than the bubble instead of being clipped. */
+.katex-display {
+  max-width: 100%;
+  margin: 0.7em 0;
+  padding: 0.2em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  color: var(--text-primary);
+}
+.katex-display > .katex {
+  font-size: 1.1em;
+  white-space: nowrap;
+}
+/* Unsupported LaTeX command: keep the raw text readable, not a red blob. */
+.katex-error {
+  color: var(--accent-gold);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
 /* Language toggle */
 .lang-toggle {
   position: fixed;

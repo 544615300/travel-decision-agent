@@ -3,6 +3,8 @@ import type { ReactNode } from 'react';
 import type { Message } from '../types';
 import Markdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import { useT } from '../i18n';
 import MindmapView from './MindmapView';
 import SectionedAnswer from './SectionedAnswer';
@@ -88,7 +90,11 @@ export default memo(function ChatBubble({ message }: Props) {
           />
         ) : (
           <div className={`${styles.markdown} ${message.streaming ? styles.markdownStreaming : ''}`}>
-            <Markdown remarkPlugins={[remarkGfm]} components={components}>
+            <Markdown
+              remarkPlugins={[remarkGfm, remarkMath]}
+              rehypePlugins={[rehypeKatex]}
+              components={components}
+            >
               {normalizeMarkdown(message.content)}
             </Markdown>
             {fallbackMindmap && (

@@ -137,6 +137,25 @@ function normalizeCompactTableLine(line: string): string {
   return line;
 }
 
+/**
+ * Models are inconsistent about math delimiters. Normalise everything into
+ * the forms remark-math + rehype-katex understand, and lift a whole-line
+ * `$$...$$` into a real math flow block (fences on their own lines) so long
+ * formulas render centered in display mode instead of being squeezed into
+ * an inline span that gets clipped by the narrow chat bubble.
+ */
+function normalizeMathLine(line: string): string {
+  const out = line
+    .replace(/\\\((.+?)\\\)/g, (_m, expr: string) => `$${expr}$`)
+    .replace(/\\\[(.+?)\\\]/g, (_m, expr: string) => `$$${expr}$$`);
+
+  const display = out.match(/^\s*\$\$(.+?)\$\$\s*$/);
+  if (display && display[1].trim()) {
+    return `\n$$\n${display[1].trim()}\n$$\n`;
+  }
+  return out;
+}
+
 export function normalizeMarkdown(content: string): string {
   let inCodeFence = false;
   return content
@@ -150,7 +169,9 @@ export function normalizeMarkdown(content: string): string {
       // is rendered as a single markdown block, hide them instead of leaking
       // raw markers into the visible text.
       if (!inCodeFence && /^\s*@@@/.test(line)) return '';
-      return inCodeFence ? line : normalizeCompactTableLine(line);
+      return inCodeFence
+        ? line
+        : normalizeMathLine(normalizeCompactTableLine(line));
     })
     .join('\n');
 }

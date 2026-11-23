@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import Markdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import { useT } from '../i18n';
 import MindmapView from './MindmapView';
 import {
@@ -81,7 +83,11 @@ export default function SectionedAnswer({ content, components, markdownClassName
           (() => {
             const body = bodyById.get(active) ?? '';
             return body
-              ? <Markdown remarkPlugins={[remarkGfm]} components={components}>
+              ? <Markdown
+                  remarkPlugins={[remarkGfm, remarkMath]}
+                  rehypePlugins={[rehypeKatex]}
+                  components={components}
+                >
                   {normalizeMarkdown(body)}
                 </Markdown>
               : <p className={styles.emptyHint}>{emptyText}</p>;
